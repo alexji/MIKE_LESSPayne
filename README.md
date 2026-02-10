@@ -6,6 +6,7 @@ Automated stellar abundance analysis of Magellan/MIKE spectra using [LESSPayne](
 
 - Python 3 with numpy, astropy, matplotlib, pandas, pyyaml
 - [LESSPayne](https://github.com/alexji/LESSPayne) installed
+- [alexmods](https://github.com/alexji/alexmods) installed (used by `quick_abund.ipynb` for reading abundance tables and plotting)
 - Reduced MIKE spectra as multi-order FITS files (`*blue_multi.fits` and `*red_multi.fits` pairs), placed in `reduced_data/`
 - A MOOG-format equivalent width linelist (provided as `master_merged_eqw_short.moog`, or specify your own in the config)
 - You'll want to `chmod +x run_lesspayne_all.sh` and same for `copy_reduced_data.sh`
@@ -16,7 +17,7 @@ Automated stellar abundance analysis of Magellan/MIKE spectra using [LESSPayne](
 .
 ├── reduced_data/          # Input: reduced MIKE spectra (*blue_multi.fits, *red_multi.fits)
 ├── cfgs/                  # Generated YAML config files (one per star)
-├── outputs/               # LESSPayne output files (.npz, .smh, abundance tables)
+├── outputs/               # LESSPayne output files (see Output Files below)
 ├── figs/                  # Summary figures
 ├── copy_reduced_data.sh            # Step 0: copy data
 ├── create_cfgs_directory_mike.py   # Step 1: generate config files
@@ -25,7 +26,8 @@ Automated stellar abundance analysis of Magellan/MIKE spectra using [LESSPayne](
 ├── get_summary.py                  # Step 4: extract stellar parameter summary
 ├── make_summary_figs.py            # Step 5: make summary plots
 ├── quick_abund.ipynb               # Step 6: interactive abundance analysis
-└── master_merged_eqw_short.moog    # Reference linelist
+├── linelist_quick.moog             # Quick EQW linelist (default for configs)
+└── master_merged_eqw_short.moog    # Full reference linelist
 ```
 
 ## Step-by-Step Guide
@@ -127,6 +129,19 @@ Open `quick_abund.ipynb` in Jupyter for interactive abundance analysis. This not
 - Plots [X/Fe] vs [Fe/H] for various elements (Na, Mg, Al, Ca, Ti, Sr, Ba, etc.)
 - This is a *very* crude quick abundance analysis meant to flag big outliers. You should NOT use this for science, you need to inspect the SMHR files for quality. However this gives a decent quick start.
 
+## Output Files
+
+Each star produces four output files in `outputs/`:
+
+- `*_paynefit.npz` — Payne fitting results (stellar parameters, best-fit spectrum, chi-squared)
+- `*_lesspayne.smh` — Full LESSPayne session file (for detailed inspection and manual analysis)
+- `*_quick_abunds.txt` — Per-element abundance summary table (species, logeps, [X/Fe], etc.)
+- `*_quick_lines.txt` — Per-line equivalent width measurements (wavelength, EQW, FWHM, etc.)
+
+## Demo Data
+
+HD122563 spectra are included as a working example.
+
 ## Customization
 
 ### Marking bad stars
@@ -141,4 +156,8 @@ Edit the `default_kws` dictionary in `create_cfgs_directory_mike.py`, or modify 
 
 ### Re-running specific steps
 
-The `-12348` flags in `run_lesspayne_all.sh` control which steps to run. Use subsets to re-run specific stages (e.g., `-3` for just EQW fitting, `-8` for just the summary). 
+The `-12348` flags in `run_lesspayne_all.sh` control which steps to run. Use subsets to re-run specific stages (e.g., `-3` for just EQW fitting, `-8` for just the summary).
+
+## License
+
+MIT
