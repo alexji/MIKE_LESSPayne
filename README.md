@@ -125,6 +125,7 @@ Open `quick_abund.ipynb` in Jupyter for interactive abundance analysis. This not
 - Reads the abundance output tables (`outputs/*abunds.txt`)
 - Compiles a combined abundance table across all stars
 - Plots [X/Fe] vs [Fe/H] for various elements (Na, Mg, Al, Ca, Ti, Sr, Ba, etc.)
+- This is a *very* crude quick abundance analysis meant to flag big outliers. You should NOT use this for science, you need to inspect the SMHR files for quality. However this gives a decent quick start.
 
 ## Customization
 

@@ -63,7 +63,7 @@ default_kws = dict(
     ),
     run_eqw_fit = dict(
         max_fwhm = 1.0,
-        eqw_linelist_fname = "./master_merged_eqw_short.moog",
+        eqw_linelist_fname = "./linelist_quick.moog",
         extra_eqw_linelist_fname = None,
         mask_sigma = 2.0,
         mask_smooth = 2,
